@@ -1,17 +1,22 @@
 /*jshint undef:false, expr:true, strict:false */
 
-var MemoryDb = require('../../index').MemoryDb;
+var RedisDb = require('../../index').RedisDb,
+    redis = require('redis-mock');
 
 require('chai').should();
 
-describe('MemoryDb', function () {
+describe('RedisDb', function () {
   beforeEach(function () {
-    this.db = new MemoryDb();
+    this.db = new RedisDb({
+      client: redis.createClient()
+    });
+
+    this.db.client.flushall();
   });
 
   describe('#find', function () {
     beforeEach(function () {
-      this.db.packages = [
+      this.packages = [
         {
           name: 'jquery',
           url: 'git://github.com/jquery/jquery.git'
@@ -21,12 +26,14 @@ describe('MemoryDb', function () {
           url: 'git://github.com/jquery/jqlite.git'
         }
       ];
+      this.db.client.set(this.packages[0].name, this.packages[0].url);
+      this.db.client.set(this.packages[1].name, this.packages[1].url);
     });
 
     describe('without arguments', function () {
       it('should return all packages', function (done) {
         this.db.find().then(function (packages) {
-          packages.should.deep.equal(this.db.packages);
+          packages.should.deep.equal(this.packages);
           done();
         }.bind(this));
       });
@@ -75,12 +82,7 @@ describe('MemoryDb', function () {
   describe('#add', function () {
     describe('if package exist', function () {
       beforeEach(function () {
-        this.db.packages = [
-          {
-            name: 'jquery',
-            url: 'git://github.com/jquery/jquery.git'
-          }
-        ];
+        this.db.client.set('jquery', 'git://jquery.git');
       });
 
       it('should return an error', function (done) {
@@ -99,13 +101,10 @@ describe('MemoryDb', function () {
         name: 'jquery',
         url: 'git://github.com/jquery/jquery.git'
       }).then(function () {
-        this.db.packages.should.deep.equal([
-          {
-            name: 'jquery',
-            url: 'git://github.com/jquery/jquery.git'
-          }
-        ]);
-        done();
+        this.db.client.get('jquery', function (err, res) {
+          res.should.not.be.null;
+          done();
+        });
       }.bind(this));
     });
   });
