@@ -10,19 +10,24 @@ describe('Package', function () {
   });
 
   describe('#validate', function () {
-    describe('without name or url', function () {
-      it('should throw an exception', function () {
-        // without url and name
+    describe('without name and url', function () {
+      it('should return two errors', function () {
         this.pkg.name = undefined;
         this.pkg.url = undefined;
         this.pkg.validate().should.include.members(['name is not a string', 'url is not a string']);
+      });
+    });
 
-        // without url
+    describe('without url', function () {
+      it('should return an error', function () {
         this.pkg.name = 'jquery';
         this.pkg.url = undefined;
         this.pkg.validate().should.include.members(['url is not a string']);
+      });
+    });
 
-        // without name
+    describe('without name', function () {
+      it('should return an error', function () {
         this.pkg.name = undefined;
         this.pkg.url = 'git://github.com/jquery/jquery.git';
         this.pkg.validate().should.include.members(['name is not a string']);

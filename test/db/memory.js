@@ -10,7 +10,6 @@ describe('MemoryDb', function () {
   });
 
   describe('#find', function () {
-
     beforeEach(function () {
       this.db.packages = [
         {
@@ -74,7 +73,6 @@ describe('MemoryDb', function () {
   });
 
   describe('#add', function () {
-
     describe('if package exist', function () {
       describe('name exist', function () {
         beforeEach(function () {
