@@ -1,0 +1,28 @@
+{
+  "name": "bower-registry",
+  "version": "0.0.0",
+  "description": "Simple bower registry using node and redis.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/neoziro/bower-registry.git"
+  },
+  "keywords": [
+    "bower",
+    "registry"
+  ],
+  "author": "Greg Bergé <berge.greg@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "~3.2.6",
+    "q": "~0.9.6"
+  },
+  "devDependencies": {
+    "chai": "~1.7.0",
+    "mocha": "~1.11.0",
+    "supertest": "~0.7.0"
+  }
+}
