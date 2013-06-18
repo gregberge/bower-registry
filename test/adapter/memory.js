@@ -29,6 +29,39 @@ describe('MemoryAdapter', function () {
   });
 
   describe('#add', function () {
+
+    describe('if package exist', function () {
+      describe('name exist', function () {
+        beforeEach(function () {
+          this.adapter.packages = [
+            {
+              name: 'jquery',
+              url: 'git://github.com/jquery/jquery.git'
+            }
+          ];
+        });
+
+        it('should return an error', function (done) {
+          this.adapter.add({
+            name: 'jquery',
+            url: 'git://github.com/jquery2/jquery2.git'
+          }).then(function () {}, function () {
+            done();
+          });
+        });
+
+        it('should return an error', function (done) {
+          this.adapter.add({
+            name: 'jquery2',
+            url: 'git://github.com/jquery/jquery.git'
+          }).then(function () {}, function () {
+            done();
+          });
+        });
+      });
+    });
+
+
     it('should add the package', function (done) {
       this.adapter.add({
         name: 'jquery',
