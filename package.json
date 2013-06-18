@@ -4,7 +4,7 @@
   "description": "Simple bower registry using node and redis.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test/**/*.js"
+    "test": "mocha test/*"
   },
   "repository": {
     "type": "git",
