@@ -2,8 +2,7 @@
 
 var Registry = require('../index').Registry,
     MemoryAdapter = require('../index').MemoryAdapter,
-    request = require('supertest'),
-    Q = require('q');
+    request = require('supertest');
 
 require('chai').should();
 
@@ -19,7 +18,6 @@ describe('Registry server', function () {
   });
 
   describe('GET /packages', function () {
-
     beforeEach(function () {
       this.adapter.packages = [
         {
@@ -38,7 +36,6 @@ describe('Registry server', function () {
   });
 
   describe('POST /packages', function () {
-
     describe('if request is correct', function () {
       it('should add the package and return 200', function (done) {
         request(this.registry.server)
@@ -83,6 +80,26 @@ describe('Registry server', function () {
           .send({name: 'jquery2', url: 'git://github.com/jquery/jquery.git'})
           .expect(406, done);
         });
+      });
+    });
+  });
+
+
+  describe('GET /packages/:name', function () {
+    describe('if the package exists', function () {
+      beforeEach(function () {
+        this.adapter.packages = [
+          {
+            name: 'jquery',
+            url: 'git://github.com/jquery/jquery.git'
+          }
+        ];
+      });
+
+      it('should return 200 and the package', function (done) {
+        request(this.registry.server)
+          .get('/packages/jquery')
+          .expect(200, this.adapter.packages[0], done);
       });
     });
   });
