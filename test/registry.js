@@ -13,11 +13,13 @@ describe('Registry server', function () {
       client: redis.createClient()
     });
 
+    this.db.client.flushall(done);
+
     this.registry = new Registry({
       db: this.db
     });
 
-    this.db.client.flushall(done);
+    this.registry.initialize();
   });
 
   describe('GET /packages', function () {
@@ -124,6 +126,19 @@ describe('Registry server', function () {
             url: 'git://github.com/jquery/jquery.git'
           }
         ], done);
+    });
+  });
+
+  describe('#listen', function () {
+    it('should call server listen', function () {
+      var listenSpyCalled = true;
+
+      this.registry.server.listen = function () {
+        listenSpyCalled = true;
+      };
+
+      this.registry.listen(3000);
+      listenSpyCalled.should.be.true;
     });
   });
 });
