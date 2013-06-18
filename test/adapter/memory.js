@@ -28,4 +28,21 @@ describe('MemoryAdapter', function () {
     });
   });
 
+  describe('#add', function () {
+    it('should add the package', function (done) {
+      this.adapter.add({
+        name: 'jquery',
+        url: 'git://github.com/jquery/jquery.git'
+      }).then(function () {
+        this.adapter.packages.should.deep.equal([
+          {
+            name: 'jquery',
+            url: 'git://github.com/jquery/jquery.git'
+          }
+        ]);
+        done();
+      }.bind(this));
+    });
+  });
+
 });
