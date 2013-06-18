@@ -15,17 +15,17 @@ describe('Package', function () {
         // without url and name
         this.pkg.name = undefined;
         this.pkg.url = undefined;
-        this.pkg.validate.should.throw;
+        this.pkg.validate().should.include.members(['name is not a string', 'url is not a string']);
 
         // without url
         this.pkg.name = 'jquery';
         this.pkg.url = undefined;
-        this.pkg.validate.should.throw;
+        this.pkg.validate().should.include.members(['url is not a string']);
 
         // without name
         this.pkg.name = undefined;
         this.pkg.url = 'git://github.com/jquery/jquery.git';
-        this.pkg.validate.should.throw;
+        this.pkg.validate().should.include.members(['name is not a string']);
       });
     });
 
@@ -33,7 +33,7 @@ describe('Package', function () {
       it('should throw an exception', function () {
         this.pkg.name = 'jquery';
         this.pkg.url = 'http://github.com/jquery/jquery';
-        this.pkg.validate.should.throw;
+        this.pkg.validate().should.include.members(['url is not a git url']);
       });
     });
 
@@ -41,7 +41,7 @@ describe('Package', function () {
       it('should not throw an exception', function () {
         this.pkg.name = 'jquery';
         this.pkg.url = 'git://github.com/jquery/jquery';
-        this.pkg.validate.should.not.throw;
+        this.pkg.validate().should.equal(false);
       });
     });
   });
