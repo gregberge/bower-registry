@@ -1,0 +1,4 @@
+#!/usr/bin/env node
+
+var program = require('../lib/cli');
+program.run(process.argv);

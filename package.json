@@ -20,7 +20,8 @@
     "express": "~3.2.6",
     "q": "~0.9.6",
     "redis": "~0.8.3",
-    "async": "~0.2.9"
+    "async": "~0.2.9",
+    "commander": "~1.2.0"
   },
   "devDependencies": {
     "chai": "~1.7.0",
