@@ -20,12 +20,37 @@ describe('MemoryAdapter', function () {
       ];
     });
 
-    it('should return all packages', function (done) {
-      this.adapter.find().then(function (packages) {
-        packages.should.equal(this.adapter.packages);
-        done();
-      }.bind(this));
+    describe('without arguments', function () {
+      it('should return all packages', function (done) {
+        this.adapter.find().then(function (packages) {
+          packages.should.deep.equal(this.adapter.packages);
+          done();
+        }.bind(this));
+      });
     });
+
+    describe('with a hash matching one value', function () {
+      it('should return packages matching the query', function (done) {
+        this.adapter.find({
+          name: 'jquery'
+        }).then(function (packages) {
+          packages.should.deep.equal(this.adapter.packages);
+          done();
+        }.bind(this));
+      });
+    });
+
+    describe('with a hash matching 0 value', function () {
+      it('should return packages matching the query', function (done) {
+        this.adapter.find({
+          name: 'jquery2'
+        }).then(function (packages) {
+          packages.length.should.equal(0);
+          done();
+        }.bind(this));
+      });
+    });
+
   });
 
   describe('#add', function () {
