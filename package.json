@@ -6,6 +6,9 @@
   "scripts": {
     "test": "mocha test/*"
   },
+  "bin": {
+    "bower-registry": "./bin/bower-registry"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/neoziro/bower-registry.git"
