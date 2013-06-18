@@ -1,2 +1,2 @@
 exports.Registry = require('./lib/registry').Registry;
-exports.MemoryAdapter = require('./lib/adapter/memory').MemoryAdapter;
+exports.MemoryDb = require('./lib/db/memory').MemoryDb;

@@ -1,17 +1,17 @@
 /*jshint undef:false, expr:true, strict:false */
 
 var Registry = require('../index').Registry,
-    MemoryAdapter = require('../index').MemoryAdapter,
+    MemoryDb = require('../index').MemoryDb,
     request = require('supertest');
 
 require('chai').should();
 
 describe('Registry server', function () {
   beforeEach(function () {
-    this.adapter = new MemoryAdapter();
+    this.db = new MemoryDb();
 
     this.registry = new Registry({
-      adapter: this.adapter
+      db: this.db
     });
 
     this.registry.initialize();
@@ -19,7 +19,7 @@ describe('Registry server', function () {
 
   describe('GET /packages', function () {
     beforeEach(function () {
-      this.adapter.packages = [
+      this.db.packages = [
         {
           name: 'jquery',
           url: 'git://github.com/jquery/jquery.git'
@@ -31,7 +31,7 @@ describe('Registry server', function () {
       request(this.registry.server)
         .get('/packages')
         .expect('Content-type', /json/)
-        .expect(200, this.adapter.packages, done);
+        .expect(200, this.db.packages, done);
     });
   });
 
@@ -56,7 +56,7 @@ describe('Registry server', function () {
 
     describe('if the package already exist', function () {
       beforeEach(function () {
-        this.adapter.packages = [
+        this.db.packages = [
           {
             name: 'jquery',
             url: 'git://github.com/jquery/jquery.git'
@@ -87,7 +87,7 @@ describe('Registry server', function () {
   describe('GET /packages/:name', function () {
     describe('if the package exists', function () {
       beforeEach(function () {
-        this.adapter.packages = [
+        this.db.packages = [
           {
             name: 'jquery',
             url: 'git://github.com/jquery/jquery.git'
@@ -98,7 +98,7 @@ describe('Registry server', function () {
       it('should return 200 and the package', function (done) {
         request(this.registry.server)
           .get('/packages/jquery')
-          .expect(200, this.adapter.packages[0], done);
+          .expect(200, this.db.packages[0], done);
       });
     });
 
@@ -113,7 +113,7 @@ describe('Registry server', function () {
 
   describe('GET /packages/search/:name', function () {
     beforeEach(function () {
-      this.adapter.packages = [
+      this.db.packages = [
         {
           name: 'jquery',
           url: 'git://github.com/jquery/jquery.git'
@@ -124,7 +124,7 @@ describe('Registry server', function () {
     it('should return matching packages', function (done) {
       request(this.registry.server)
         .get('/packages/search/jq')
-        .expect(200, this.adapter.packages, done);
+        .expect(200, this.db.packages, done);
     });
   });
 });

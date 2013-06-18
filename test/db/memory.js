@@ -1,18 +1,18 @@
 /*jshint undef:false, expr:true, strict:false */
 
-var MemoryAdapter = require('../../index').MemoryAdapter;
+var MemoryDb = require('../../index').MemoryDb;
 
 require('chai').should();
 
-describe('MemoryAdapter', function () {
+describe('MemoryDb', function () {
   beforeEach(function () {
-    this.adapter = new MemoryAdapter();
+    this.db = new MemoryDb();
   });
 
   describe('#find', function () {
 
     beforeEach(function () {
-      this.adapter.packages = [
+      this.db.packages = [
         {
           name: 'jquery',
           url: 'git://github.com/jquery/jquery.git'
@@ -26,8 +26,8 @@ describe('MemoryAdapter', function () {
 
     describe('without arguments', function () {
       it('should return all packages', function (done) {
-        this.adapter.find().then(function (packages) {
-          packages.should.deep.equal(this.adapter.packages);
+        this.db.find().then(function (packages) {
+          packages.should.deep.equal(this.db.packages);
           done();
         }.bind(this));
       });
@@ -35,7 +35,7 @@ describe('MemoryAdapter', function () {
 
     describe('with a hash matching one value', function () {
       it('should return packages matching the query', function (done) {
-        this.adapter.find({
+        this.db.find({
           name: 'jquery'
         }).then(function (packages) {
           packages.should.deep.equal([{
@@ -49,7 +49,7 @@ describe('MemoryAdapter', function () {
 
     describe('with a hash matching 0 value', function () {
       it('should not return packages', function (done) {
-        this.adapter.find({
+        this.db.find({
           name: 'jquery2'
         }).then(function (packages) {
           packages.length.should.equal(0);
@@ -60,7 +60,7 @@ describe('MemoryAdapter', function () {
 
     describe('with a hash with "$match" operator', function () {
       it('should return packages matching the query', function (done) {
-        this.adapter.find({
+        this.db.find({
           $match: {
             name: 'jq'
           }
@@ -78,7 +78,7 @@ describe('MemoryAdapter', function () {
     describe('if package exist', function () {
       describe('name exist', function () {
         beforeEach(function () {
-          this.adapter.packages = [
+          this.db.packages = [
             {
               name: 'jquery',
               url: 'git://github.com/jquery/jquery.git'
@@ -87,7 +87,7 @@ describe('MemoryAdapter', function () {
         });
 
         it('should return an error', function (done) {
-          this.adapter.add({
+          this.db.add({
             name: 'jquery',
             url: 'git://github.com/jquery2/jquery2.git'
           }).then(function () {}, function () {
@@ -96,7 +96,7 @@ describe('MemoryAdapter', function () {
         });
 
         it('should return an error', function (done) {
-          this.adapter.add({
+          this.db.add({
             name: 'jquery2',
             url: 'git://github.com/jquery/jquery.git'
           }).then(function () {}, function () {
@@ -108,11 +108,11 @@ describe('MemoryAdapter', function () {
 
 
     it('should add the package', function (done) {
-      this.adapter.add({
+      this.db.add({
         name: 'jquery',
         url: 'git://github.com/jquery/jquery.git'
       }).then(function () {
-        this.adapter.packages.should.deep.equal([
+        this.db.packages.should.deep.equal([
           {
             name: 'jquery',
             url: 'git://github.com/jquery/jquery.git'
