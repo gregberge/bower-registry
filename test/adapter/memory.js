@@ -16,6 +16,10 @@ describe('MemoryAdapter', function () {
         {
           name: 'jquery',
           url: 'git://github.com/jquery/jquery.git'
+        },
+        {
+          name: 'jqlite',
+          url: 'git://github.com/jquery/jqlite.git'
         }
       ];
     });
@@ -34,20 +38,36 @@ describe('MemoryAdapter', function () {
         this.adapter.find({
           name: 'jquery'
         }).then(function (packages) {
-          packages.should.deep.equal(this.adapter.packages);
+          packages.should.deep.equal([{
+            name: 'jquery',
+            url: 'git://github.com/jquery/jquery.git'
+          }]);
           done();
         }.bind(this));
       });
     });
 
     describe('with a hash matching 0 value', function () {
-      it('should return packages matching the query', function (done) {
+      it('should not return packages', function (done) {
         this.adapter.find({
           name: 'jquery2'
         }).then(function (packages) {
           packages.length.should.equal(0);
           done();
         }.bind(this));
+      });
+    });
+
+    describe('with a hash with "$match" operator', function () {
+      it('should return packages matching the query', function (done) {
+        this.adapter.find({
+          $match: {
+            name: 'jq'
+          }
+        }).then(function (packages) {
+          packages.length.should.equal(2);
+          done();
+        });
       });
     });
 
