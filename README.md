@@ -2,6 +2,12 @@
 
 Simple bower registry using node and redis.
 
+## Install
+
+```
+npm install -g bower-registry
+```
+
 ## How to use
 
 ### From command line
