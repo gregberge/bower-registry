@@ -42,11 +42,11 @@ describe('Registry server', function () {
 
   describe('POST /packages', function () {
     describe('if request is correct', function () {
-      it('should add the package and return 200', function (done) {
+      it('should add the package and return 201', function (done) {
         request(this.registry.server)
           .post('/packages')
           .send({name: 'jquery', url: 'git://github.com/jquery/jquery.git'})
-          .expect(200, done);
+          .expect(201, done);
       });
     });
 
