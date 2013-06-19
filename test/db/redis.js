@@ -113,4 +113,19 @@ describe('RedisDb', function () {
     });
   });
 
+  describe('#hit', function () {
+    beforeEach(function () {
+      this.db.client.hmset('jquery', 'url', 'git://jquery.git', 'name', 'jquery');
+    });
+
+    it('should increment package hit value', function (done) {
+      this.db.hit('jquery').then(function () {
+        this.db.client.hgetall('jquery', function (err, pkg) {
+          pkg.hits.should.equal(1);
+          done();
+        });
+      }.bind(this));
+    });
+  });
+
 });
