@@ -1,8 +1,7 @@
 /*jshint undef:false, expr:true, strict:false */
 
 var RedisDb = require('../../index').RedisDb,
-    redis = require('redis-mock'),
-    async = require('async');
+    redis = require('redis-mock');
 
 require('chai').should();
 
@@ -16,7 +15,7 @@ describe('RedisDb', function () {
   });
 
   describe('#find', function () {
-    beforeEach(function (done) {
+    beforeEach(function () {
       this.packages = [
         {
           name: 'jquery',
@@ -31,14 +30,8 @@ describe('RedisDb', function () {
       var client = this.db.client,
           packages = this.packages;
 
-      async.parallel([
-        function (done) {
-          client.set(packages[0].name, packages[0].url, done);
-        },
-        function (done) {
-          client.set(packages[1].name, packages[1].url, done);
-        }
-      ], done);
+      client.hmset(packages[0].name, 'url', packages[0].url, 'name', packages[0].name);
+      client.hmset(packages[1].name, 'url', packages[1].url, 'name', packages[1].name);
     });
 
     describe('without arguments', function () {
@@ -92,8 +85,8 @@ describe('RedisDb', function () {
 
   describe('#add', function () {
     describe('if package exist', function () {
-      beforeEach(function (done) {
-        this.db.client.set('jquery', 'git://jquery.git', done);
+      beforeEach(function () {
+        this.db.client.hmset('jquery', 'url', 'git://jquery.git', 'name', 'jquery');
       });
 
       it('should return an error', function (done) {

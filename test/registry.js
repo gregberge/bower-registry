@@ -8,12 +8,12 @@ var Registry = require('../index').Registry,
 require('chai').should();
 
 describe('Registry server', function () {
-  beforeEach(function (done) {
+  beforeEach(function () {
     this.db = new RedisDb({
       client: redis.createClient()
     });
 
-    this.db.client.flushall(done);
+    this.db.client.flushall();
 
     this.registry = new Registry({
       db: this.db
@@ -23,8 +23,8 @@ describe('Registry server', function () {
   });
 
   describe('GET /packages', function () {
-    beforeEach(function (done) {
-      this.db.client.set('jquery', 'git://github.com/jquery/jquery.git', done);
+    beforeEach(function () {
+      this.db.client.hmset('jquery', 'url', 'git://github.com/jquery/jquery.git', 'name', 'jquery');
     });
 
     it('should show all avalaible packages', function (done) {
@@ -60,8 +60,8 @@ describe('Registry server', function () {
     });
 
     describe('if the package already exist', function () {
-      beforeEach(function (done) {
-        this.db.client.set('jquery', 'git://github.com/jquery/jquery.git', done);
+      beforeEach(function () {
+        this.db.client.hmset('jquery', 'url', 'git://github.com/jquery/jquery.git', 'name', 'jquery');
       });
 
       describe('if the name exists', function () {
@@ -89,8 +89,8 @@ describe('Registry server', function () {
 
   describe('GET /packages/:name', function () {
     describe('if the package exists', function () {
-      beforeEach(function (done) {
-        this.db.client.set('jquery', 'git://github.com/jquery/jquery.git', done);
+      beforeEach(function () {
+        this.db.client.hmset('jquery', 'url', 'git://github.com/jquery/jquery.git', 'name', 'jquery');
       });
 
       it('should return 200 and the package', function (done) {
@@ -113,8 +113,8 @@ describe('Registry server', function () {
   });
 
   describe('GET /packages/search/:name', function () {
-    beforeEach(function (done) {
-      this.db.client.set('jquery', 'git://github.com/jquery/jquery.git', done);
+    beforeEach(function () {
+      this.db.client.hmset('jquery', 'url', 'git://github.com/jquery/jquery.git', 'name', 'jquery');
     });
 
     it('should return matching packages', function (done) {
