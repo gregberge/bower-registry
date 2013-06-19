@@ -101,6 +101,20 @@ describe('Registry server', function () {
             url: 'git://github.com/jquery/jquery.git'
           }, done);
       });
+
+      it('should do an hit on the package', function (done) {
+        request(this.registry.server)
+          .get('/packages/jquery')
+          .expect(200, {
+            name: 'jquery',
+            url: 'git://github.com/jquery/jquery.git'
+          }, function () {
+            this.db.client.hgetall('jquery', function (err, pkg) {
+              pkg.hits.should.equal(1);
+              done();
+            });
+          }.bind(this));
+      });
     });
 
     describe('if the package doesn\'t exist', function () {
