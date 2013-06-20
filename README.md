@@ -47,6 +47,21 @@ registry
     -h, --host [value]        Server host
 ```
 
+### Example
+
+```
+# Start registry server on port 8080 using redis (port 6379, host 127.0.0.1)
+bower-registry -p 8080 -d redis -o '{"port": 6379, "host": "127.0.0.1"}' 
+```
+
+## Database options
+
+### Redis
+
+* `port`: redis instance port
+* `host`: redis instance host
+* other options available in [node_redis](https://github.com/mranney/node_redis#rediscreateclientport-host-options)
+
 ## License
 
 MIT
