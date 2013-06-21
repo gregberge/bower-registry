@@ -50,6 +50,23 @@ describe('Registry server', function () {
       });
     });
 
+    describe('private package', function () {
+      it('should return 400 if the registry is not private', function (done) {
+        request(this.registry.server)
+          .post('/packages')
+          .send({name: 'jquery', url: 'git@github.com:jquery/jquery.git'})
+          .expect(400, done);
+      });
+
+      it('should return 201 if the registry is private', function (done) {
+        this.registry.private = true;
+        request(this.registry.server)
+          .post('/packages')
+          .send({name: 'jquery', url: 'git@github.com:jquery/jquery.git'})
+          .expect(201, done);
+      });
+    });
+
     describe('if request is bad', function () {
       it('shouldn\'t add the package and return 400', function (done) {
         request(this.registry.server)

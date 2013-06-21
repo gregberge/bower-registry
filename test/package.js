@@ -35,7 +35,7 @@ describe('Package', function () {
     });
 
     describe('with a bad url', function () {
-      it('should throw an exception', function () {
+      it('should return errors', function () {
         this.pkg.name = 'jquery';
         this.pkg.url = 'http://github.com/jquery/jquery';
         this.pkg.validate().should.include.members(['url is not a git url']);
@@ -43,11 +43,35 @@ describe('Package', function () {
     });
 
     describe('with a name and a git url', function () {
-      it('should not throw an exception', function () {
-        this.pkg.name = 'jquery';
-        this.pkg.url = 'git://github.com/jquery/jquery';
-        this.pkg.validate().should.equal(false);
+
+      describe('without private flag', function () {
+        describe('with a git protocol url', function () {
+          it('should not throw an exception', function () {
+            this.pkg.name = 'jquery';
+            this.pkg.url = 'git://github.com/jquery/jquery.git';
+            this.pkg.validate().should.equal(false);
+          });
+        });
+
+        describe('with a ssh url', function () {
+          it('should throw an exception', function () {
+            this.pkg.name = 'jquery';
+            this.pkg.url = 'git@github.com:jquery/jquery.git';
+            this.pkg.validate().should.include.members(['private url is not accepted']);
+          });
+        });
       });
+
+      describe('with private flag', function () {
+        describe('with a ssh url', function () {
+          it('should not throw an exception', function () {
+            this.pkg.name = 'jquery';
+            this.pkg.url = 'git@github.com:jquery/jquery.git';
+            this.pkg.validate({private: true}).should.equal(false);
+          });
+        });
+      });
+
     });
   });
 });
