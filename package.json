@@ -1,6 +1,6 @@
 {
   "name": "bower-registry",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Simple bower registry using node and redis.",
   "main": "index.js",
   "scripts": {
