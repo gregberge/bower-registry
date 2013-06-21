@@ -31,18 +31,21 @@ describe('CLI', function () {
         });
       });
     });
+
+    describe('Private', function () {
+      it('should parse private', function () {
+        // long
+        program.parse('node bower-registry -d mysql --private'.split(' '));
+        program.private.should.be.true;
+
+        // short
+        program.parse('node bower-registry -d mysql -P'.split(' '));
+        program.private.should.be.true;
+      });
+    });
   });
 
   describe('#run', function () {
-    describe('with an unknown database', function () {
-      it('should throw an exception', function () {
-        var runDb = function () {
-          run(['node', 'bower-registry', '--database', 'x']);
-        };
-
-        runDb.should.throw(/unknown database/);
-      });
-    });
 
     describe('with a valid database and a port', function () {
       it('should listen on specified port', function () {
