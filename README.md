@@ -1,4 +1,4 @@
-# bower-registry [![Build Status](https://travis-ci.org/neoziro/hulkster.png?branch=master)](https://travis-ci.org/neoziro/hulkster)
+# bower-registry [![Build Status](https://travis-ci.org/neoziro/bower-registry.png?branch=master)](https://travis-ci.org/neoziro/bower-registry)
 
 Simple bower registry using node and redis.
 
@@ -37,8 +37,9 @@ registry
     -V, --version             output the version number
     -d, --database <value>    Database
     -o, --db-options [value]  Database options
-    -p, --port <value>        Server port
-    -h, --host [value]        Server host
+    -p, --port <value>        Web server port
+    -h, --host [value]        Web server host
+    -P, --private             Accept private packages
 ```
 
 ## License
