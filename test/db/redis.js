@@ -105,7 +105,7 @@ describe('RedisDb', function () {
         name: 'jquery',
         url: 'git://github.com/jquery/jquery.git'
       }).then(function () {
-        this.db.client.get('jquery', function (err, res) {
+        this.db.client.hgetall('jquery', function (err, res) {
           res.should.not.be.null;
           done();
         });
