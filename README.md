@@ -45,7 +45,7 @@ registry
     -o, --db-options [value]  Database options
     -p, --port <value>        Web server port
     -h, --host [value]        Web server host
-    -P, --private             Accept private packages
+    -P, --private             Accept private packages and allow packages hosted on private servers
 ```
 
 ### Example
