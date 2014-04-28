@@ -20,16 +20,17 @@
   "author": "Greg Bergé <berge.greg@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "express": "~3.2.6",
-    "q": "~0.9.6",
-    "redis": "~0.8.3",
-    "async": "~0.2.9",
-    "commander": "~1.2.0"
+    "express": "^4.1.1",
+    "q": "^1.0.1",
+    "redis": "^0.10.1",
+    "async": "^0.7.0",
+    "commander": "^2.2.0",
+    "body-parser": "^1.0.2"
   },
   "devDependencies": {
-    "chai": "~1.7.0",
-    "mocha": "~1.11.0",
-    "supertest": "~0.7.0",
-    "redis-mock": "~0.2.0"
+    "chai": "^1.9.1",
+    "mocha": "^1.18.2",
+    "supertest": "^0.11.0",
+    "redis-mock": "^0.2.0"
   }
 }
