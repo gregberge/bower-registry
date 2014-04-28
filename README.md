@@ -1,4 +1,7 @@
-# bower-registry [![Build Status](https://travis-ci.org/neoziro/bower-registry.png?branch=master)](https://travis-ci.org/neoziro/bower-registry)
+# bower-registry
+[![Build Status](https://travis-ci.org/neoziro/bower-registry.svg?branch=master)](https://travis-ci.org/neoziro/bower-registry)
+[![Dependency Status](https://david-dm.org/neoziro/bower-registry.svg?theme=shields.io)](https://david-dm.org/neoziro/bower-registry)
+[![devDependency Status](https://david-dm.org/neoziro/bower-registry/dev-status.svg?theme=shields.io)](https://david-dm.org/neoziro/bower-registry#info=devDependencies)
 
 Simple bower registry using node and redis.
 
@@ -52,7 +55,7 @@ registry
 
 ```
 # Start registry server on port 8080 using redis (port 6379, host 127.0.0.1)
-bower-registry -p 8080 -d redis -o '{"port": 6379, "host": "127.0.0.1"}' 
+bower-registry -p 8080 -d redis -o '{"port": 6379, "host": "127.0.0.1"}'
 ```
 
 ## Database options
