@@ -48,6 +48,14 @@ describe('Registry server', function () {
           .send({name: 'jquery', url: 'git://github.com/jquery/jquery.git'})
           .expect(201, done);
       });
+
+      it('should add the package and return 201', function (done) {
+        request(this.registry.server)
+          .post('/packages')
+          .send('name=jquery')
+          .send('url=git://github.com/jquery/jquery.git')
+          .expect(201, done);
+      });
     });
 
     describe('private package', function () {
