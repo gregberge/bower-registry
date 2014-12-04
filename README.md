@@ -3,7 +3,7 @@
 [![Dependency Status](https://david-dm.org/neoziro/bower-registry.svg?theme=shields.io)](https://david-dm.org/neoziro/bower-registry)
 [![devDependency Status](https://david-dm.org/neoziro/bower-registry/dev-status.svg?theme=shields.io)](https://david-dm.org/neoziro/bower-registry#info=devDependencies)
 
-Simple bower registry using node and redis.
+Simple bower registry using node and either redis or MongoDB.
 
 ## Install
 
@@ -24,10 +24,10 @@ bower-registry -d redis
 ```javascript
 var bowerRegistry = require('bower-registry'),
     Registry = bowerRegistry.Registry,
-    RedisDb = bowerRegistry.RedisDb;
+    RedisDb = bowerRegistry.RedisDb; // or MongoDb
 
 var registry = new Registry({
-  db: new RedisDb()
+  db: new RedisDb() // or MongoDb
 });
 
 registry
@@ -51,13 +51,17 @@ registry
     -P, --private             Accept private packages and allow packages hosted on private servers
 ```
 
-### Example
+### Examples
 
-```
+```bash
 # Start registry server on port 8080 using redis (port 6379, host 127.0.0.1)
 bower-registry -p 8080 -d redis -o '{"port": 6379, "host": "127.0.0.1"}'
+
+# Start registry server on default port 80 using MongoDB (port 27017, host 127.0.0.1)
+bower-registry -d mongo -o '{"url": "mongodb://127.0.0.1:27017/bower-registry"}'
 ```
 
+NOTE: On Windows you've to use a double-quoted database options string and therefore have to escape the double quotes with a \ in the JSON string in case you use cmd.exe as interpreter. Using powershell.exe, use single quotes and escape each double quote with an extra double quote in the JSON string.
 ## Database options
 
 ### Redis
@@ -65,6 +69,11 @@ bower-registry -p 8080 -d redis -o '{"port": 6379, "host": "127.0.0.1"}'
 * `port`: redis instance port
 * `host`: redis instance host
 * other options available in [node_redis](https://github.com/mranney/node_redis#rediscreateclientport-host-options)
+
+### MongoDB
+
+* `url`: MongoDB connection URL
+* other options available in [node-mongodb-native](https://github.com/mongodb/node-mongodb-native/blob/2.0/lib/mongo_client.js#L74-299)
 
 ## License
 
