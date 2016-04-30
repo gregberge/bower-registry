@@ -1,4 +1,7 @@
 # bower-registry
+
+# This plugin is no longer actively maintained, you can still use it but issues will not be resolved. If you want the npm name, you can contact me by email.
+
 [![Build Status](https://travis-ci.org/neoziro/bower-registry.svg?branch=master)](https://travis-ci.org/neoziro/bower-registry)
 [![Dependency Status](https://david-dm.org/neoziro/bower-registry.svg?theme=shields.io)](https://david-dm.org/neoziro/bower-registry)
 [![devDependency Status](https://david-dm.org/neoziro/bower-registry/dev-status.svg?theme=shields.io)](https://david-dm.org/neoziro/bower-registry#info=devDependencies)
