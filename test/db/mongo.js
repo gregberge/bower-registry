@@ -1,16 +1,24 @@
 /*jshint undef:false, expr:true, strict:false */
 
-var MongoDb = require('../../index').MongoDb,
+var Q = require('q'),
+    MongoDb = require('../../index').MongoDb,
     mockgo = require('mockgo'),
     should = require('chai').should();
 
 describe('MongoDb', function () {
   beforeEach(function (done) {
+    var defer = Q.defer();
+    mockgo.getConnection(function(err, db) {
+      if (err) {
+        return defer.reject();
+      }
+
+      defer.resolve(db);
+      done();
+    });
     this.db = new MongoDb({
       url: 'mongodb://localhost:8000/testDatabase',
-      client: mockgo.getConnection(function(err, db) {
-        done();
-      })
+      client: defer.promise
     });
   });
 
