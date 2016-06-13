@@ -6,6 +6,8 @@ var Q = require('q'),
     should = require('chai').should();
 
 describe('MongoDb', function () {
+  this.timeout(0);
+
   beforeEach(function (done) {
     var defer = Q.defer();
     mockgo.getConnection(function(err, db) {
